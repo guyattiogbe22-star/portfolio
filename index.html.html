@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ma première page</title>
+  <style>
+    body {
+      background-color: #f0f4ff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    h1 { color: #2b50e6; }
+    p { font-size: 18px; }
+    h2 { color: #ff6600; }
+    .carte {
+      background-color: white;
+      border: 2px solid #2b50e6;
+      border-radius: 12px;
+      padding: 16px;
+      max-width: 500px;
+      margin: 20px auto;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+    a {
+      display: inline-block;
+      background-color: #2b50e6;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin: 10px;
+    }
+    a:hover { background-color: #1a3bb3; }
+  </style>
+</head>
+<body>
+  <h1>Bonjour tout le monde !</h1>
+  <p>Je commence à apprendre à coder.</p>
+  <h2>Mon prénom est Guy</h2>
+
+  <div class="carte">
+    <h2>Mes études</h2>
+    <p>Je suis étudiant à l'Université de Lomé, en 2ème année à la FASEG, dans la filière Comptabilité Contrôle Audit (CCA).</p>
+  </div>
+
+  <div class="carte">
+    <h2>Mes centres d'intérêt</h2>
+    <p>J'aime l'informatique, la comptabilité et la robotisation de la technologie.</p>
+    <ul>
+      <li>Informatique</li>
+      <li>Comptabilité</li>
+      <li>Robotique</li>
+    </ul>
+  </div>
+
+  <div class="carte">
+    <h2>Mes objectifs</h2>
+    <p>Devenir développeur en 3 mois.</p>
+  </div>
+
+  <a href="https://univ-lome.tg/">Site de l'Université de Lomé</a>
+  <br>
+  <img src="https://picsum.photos/300" alt="Image aléatoire">
+
+  <div class="carte">
+      <h2>Calculateur de TVA</h2>
+      <input type="number" id="montant" placeholder="Montant">
+      <br>
+      <button onclick="calculerTTC()">HT → TTC</button>
+      <button onclick="calculerHT()">TTC → HT</button>
+      <p id="resultat"></p>
+    </div>
+  
+    <div class="carte">
+      <h2>Résultat de l'entreprise</h2>
+      <input type="number" id="produits" placeholder="Total des produits">
+      <input type="number" id="charges" placeholder="Total des charges">
+      <br>
+      <button onclick="calculerResultat()">Calculer</button>
+      <p id="verdict"></p>
+    </div>
+<div class="carte">
+        <h2>Mes dépenses</h2>
+        <input type="text" id="nomDepense" placeholder="Nom (ex : transport)">
+        <input type="number" id="prixDepense" placeholder="Montant">
+        <br>
+        <button onclick="ajouterDepense()">Ajouter</button>
+        <ul id="listeDepenses"></ul>
+        <p id="totalDepenses"></p>
+      </div>
+    <script>
+      function calculerTTC() {
+        let montantHT = Number(document.getElementById("montant").value);
+        let tva = montantHT * 0.18;
+        let ttc = montantHT + tva;
+  
+        document.getElementById("resultat").textContent =
+          "TVA : " + tva + " | Total TTC : " + ttc;
+      }
+  
+      function calculerHT() {
+        let montantTTC = Number(document.getElementById("montant").value);
+        let ht = montantTTC / 1.18;
+  
+        document.getElementById("resultat").textContent =
+          "Montant HT : " + ht.toFixed(2);
+      }
+  
+      function calculerResultat() {
+        let produits = Number(document.getElementById("produits").value);
+        let charges = Number(document.getElementById("charges").value);
+        let resultat = produits - charges;
+  
+        if (resultat > 0) {
+          document.getElementById("verdict").textContent =
+            "Bénéfice de " + resultat + " ✅";
+        } else if (resultat < 0) {
+          document.getElementById("verdict").textContent =
+            "Perte de " + Math.abs(resultat) + " ❌";
+        } else {
+          document.getElementById("verdict").textContent =
+            "Résultat nul ⚖️";
+        }
+      }
+      let depenses = [];
+
+function ajouterDepense() {
+        let nom = document.getElementById("nomDepense").value;
+        let prix = Number(document.getElementById("prixDepense").value);
+      
+        depenses.push({ nom: nom, prix: prix });
+      
+        let liste = "";
+        let total = 0;
+      
+        for (let i = 0; i < depenses.length; i++) {
+          liste = liste + "<li>" + depenses[i].nom + " : " + depenses[i].prix + "</li>";
+          total = total + depenses[i].prix;
+        }
+      
+        document.getElementById("listeDepenses").innerHTML = liste;
+        document.getElementById("totalDepenses").textContent = "Total : " + total;
+      
+        document.getElementById("nomDepense").value = "";
+        document.getElementById("prixDepense").value = "";
+      }
+      
+    </script>
+  </body>
+  </html>
